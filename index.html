@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html prefix="rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+      rdfs: http://www.w3.org/2000/01/rdf-schema#
+      owl: http://www.w3.org/2002/07/owl#
+      vs: http://www.w3.org/2003/06/sw-vocab-status/ns#"
+      about="https://w3id.org/payments" typeof="owl:Ontology">
+  <head>
+    <title property="rdfs:label">Web Payments Vocabulary 1.0</title>
+    <meta http-equiv='Content-Type' content='text/html;charset=utf-8'/>
+    <!--
+      === NOTA BENE ===
+      For the three scripts below, if your spec resides on dev.w3 you can check them
+      out in the same tree and use relative links so that they'll work offline,
+     -->
+    <link rel="stylesheet" href="spec.css">
+    <script src='//www.w3.org/Tools/respec/respec-w3c-common' async class='remove'></script>
+    <script src='utils.js' async class='remove'></script>
+    <script src='../specs/respec-w3c-common.js' class='remove'></script>
+
+    <script class='remove'>
+      var respecConfig = {
+          // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
+          specStatus:           "CG-DRAFT",
+
+          // the specification's short name, as in http://www.w3.org/TR/short-name/
+          shortName:            "web-payments-vocab",
+
+          // if you wish the publication date to be other than today, set this
+          // publishDate:  "2009-08-06",
+
+          // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
+          // and its maturity status
+          // previousPublishDate:  "1977-03-15",
+          // previousMaturity:  "WD",
+
+          // if there a publicly available Editor's Draft, this is the link
+          edDraftURI:           "http://web-payments.github.io/web-payments-vocab/",
+
+          // if this is a LCWD, uncomment and set the end of its review period
+          // lcEnd: "2009-08-05",
+
+          // editors, add as many as you like
+          // only "name" is required
+          editors:  [
+              { name: "Manu Sporny", url: "https://manu.sporny.org/",
+                company: "Digital Bazaar, Inc.", companyURL: "http://digitalbazaar.com/" },
+          ],
+
+          // authors, add as many as you like.
+          // This is optional, uncomment if you have authors as well as editors.
+          // only "name" is required. Same format as editors.
+
+          //authors:  [
+          //    { name: "Your Name", url: "http://example.org/",
+          //      company: "Your Company", companyURL: "http://example.com/" },
+          //],
+
+          // name of the WG
+          wg:           "Web Payments Community Group",
+
+          // URI of the public WG page
+          wgURI:        "http://www.w3.org/community/webpayments/",
+
+          // name (with the @w3c.org) of the public mailing to which comments are due
+          wgPublicList: "public-webpayments@w3c.org",
+
+          // URI of the patent status for this WG, for Rec-track documents
+          // !!!! IMPORTANT !!!!
+          // This is important for Rec-track documents, do not copy a patent URI from a random
+          // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
+          // Team Contact.
+          wgPatentURI:  "",
+          doRDFa: false
+      };
+    </script>
+  </head>
+  <body>
+    <section id='abstract'>
+      <p property="rdfs:comment">
+This document describes a number of constants, classes, and properties that
+are used when expressing and executing Web Payments. The vocabulary includes
+classes of things like payment instruments, payment requests, and
+payment acknowledgements as well as their associated properties and value
+types. All formal vocabulary terms necessary to initiate, execute, and
+acknowledge a payment are included.
+      </p>
+    </section>
+
+    <section id='sotd'>
+      <p>
+This is an experimental document that is being actively worked on by the
+W3C <a href="https://web-payments.org/">Web Payments Community Group</a>. All
+feedback on this document should be sent to
+<a href="mailto:public-webpayments@w3.org">public-webpayments@w3.org</a>
+(<a href="http://lists.w3.org/Archives/Public/public-webpayments/">archive</a>).
+      </p>
+    </section>
+
+    <section>
+      <h2>Introduction</h2>
+      <p>
+This document describes a number of constants, classes, and properties that
+are used when expressing and executing Web Payments. The vocabulary includes
+classes of things like payment instruments, payment requests, and
+payment acknowledgements.
+      </p>
+      <p class="issue">
+This entire document is a work in progress and is thus fantastically
+incomplete and unstable. It MUST NOT be used for any production
+use.
+      </p>
+    </section>
+
+  <section class="normative">
+    <h2>Terminology</h2>
+
+    <div data-include="//w3c.github.io/webpayments-ig/latest/common/terms.html"
+      data-oninclude="restrictReferences">
+    </div>
+
+  </section>
+
+    <section>
+      <h2>Constants</h2>
+
+      <section id="Visa" about="https://visa.com/vocabs#Visa"
+        typeof="rdfs:Class">
+        <h3><span property="rdfs:label">Visa</span></h3>
+          <p property="rdfs:comment">
+A constant denoting the Visa payment scheme.
+          </p>
+          <dl>
+            <dt>Status</dt>
+            <dd property="vs:term_status">unstable</dd>
+            <dt>Parent Class</dt>
+            <dd><a property="rdfs:subclassOf" href="http://www.w3.org/2000/01/rdf-schema#Class">Class</a></dd>
+            <dt>Typically used in:</dt>
+            <dd><a href="#PaymentInstrument">PaymentInstrument</a></dd>
+          </dl>
+          <p>
+In the following example, the <code>scheme</code> is set to the
+<code>Visa</code> <a>payment scheme</a>.
+          </p>
+          <pre class="example prettyprint language-jsonld">
+{
+  '@context': 'https://w3id.org/payments/v1',
+  type: 'PaymentInstrument',
+  scheme: 'Visa',
+  label: 'ExampleBank Visa Card',
+  paymentRequestService: 'https://pay.example.com/services/cards'
+}
+        </pre>
+      </section>
+
+      <section id="MasterCard" about="https://mastercard.com/vocabs#MasterCard"
+        typeof="rdfs:Class">
+        <h3><span property="rdfs:label">MasterCard</span></h3>
+          <p property="rdfs:comment">
+A constant denoting the MasterCard payment scheme.
+          </p>
+          <dl>
+            <dt>Status</dt>
+            <dd property="vs:term_status">unstable</dd>
+            <dt>Parent Class</dt>
+            <dd><a property="rdfs:subclassOf" href="http://www.w3.org/2000/01/rdf-schema#Class">Class</a></dd>
+            <dt>Typically used in:</dt>
+            <dd><a href="#PaymentInstrument">PaymentInstrument</a></dd>
+          </dl>
+          <p>
+In the following example, the <code>scheme</code> is set to the
+<code>MasterCard</code> <a>payment scheme</a>.
+          </p>
+          <pre class="example prettyprint language-jsonld">
+{
+  '@context': 'https://w3id.org/payments/v1',
+  type: 'PaymentInstrument',
+  scheme: 'MasterCard',
+  label: 'ExampleBank MasterCard',
+  paymentRequestService: 'https://pay.example.com/services/cards'
+}
+        </pre>
+      </section>
+
+      <section id="Bitcoin" about="https://bitcoin.org/vocabs#Bitcoin"
+        typeof="rdfs:Class">
+        <h3><span property="rdfs:label">Bitcoin</span></h3>
+          <p property="rdfs:comment">
+A constant denoting the Bitcoin payment scheme.
+          </p>
+          <dl>
+            <dt>Status</dt>
+            <dd property="vs:term_status">unstable</dd>
+            <dt>Parent Class</dt>
+            <dd><a property="rdfs:subclassOf" href="http://www.w3.org/2000/01/rdf-schema#Class">Class</a></dd>
+            <dt>Typically used in:</dt>
+            <dd><a href="#PaymentInstrument">PaymentInstrument</a></dd>
+          </dl>
+          <p>
+In the following example, the <code>scheme</code> is set to the
+<code>Bitcoin</code> <a>payment scheme</a>.
+          </p>
+          <pre class="example prettyprint language-jsonld">
+{
+  '@context': 'https://w3id.org/payments/v1',
+  type: 'PaymentInstrument',
+  scheme: 'Bitcoin',
+  label: 'ExampleCoin Bitcoin Account',
+  paymentRequestService: 'https://pay.example.com/services/bitcoin'
+}
+        </pre>
+      </section>
+
+    </section>
+
+    <section>
+      <h2>Classes</h2>
+
+      <section id="PaymentInstrument" about="https://w3id.org/payment#PaymentInstrument"
+        typeof="rdfs:Class">
+        <h3><span property="rdfs:label">Payment Instrument</span></h3>
+          <p property="rdfs:comment">
+A <a>payment instrument</a> is a mechanism used to transfer value from a
+<a>payer</a> to a <a>payee</a>.
+          </p>
+          <dl>
+            <dt>Status</dt>
+            <dd property="vs:term_status">unstable</dd>
+            <dt>Parent Class</dt>
+            <dd><a property="rdfs:subclassOf" href="http://www.w3.org/2000/01/rdf-schema#Class">Class</a></dd>
+            <dt>Common Properties</dt>
+            <dd>scheme, label, paymentRequestService</dd>
+          </dl>
+          <p>
+The example expresses a <a>payment instrument</a> for the Visa payment scheme:
+          </p>
+          <pre class="example prettyprint language-jsonld">
+{
+  '@context': 'https://w3id.org/payments/v1',
+  type: 'PaymentInstrument',
+  scheme: 'Visa',
+  label: 'ExampleBank Visa Card',
+  paymentRequestService: 'https://pay.example.com/services/cards'
+}
+        </pre>
+      </section>
+
+    </section>
+
+    <section>
+      <h2>Properties</h2>
+
+      <section id="label" about="http://www.w3.org/2000/01/rdf-schema#label"
+        typeof="rdf:Property">
+        <h3><span property="rdfs:label">label</span></h3>
+        <p property="rdfs:comment">
+A short human-readable label for a thing.
+        </p>
+        <dl>
+          <dt>Status</dt>
+          <dd property="vs:term_status">stable</dd>
+          <dt>Attribute of</dt>
+          <dd><a property="rdfs:domain" href="http://schema.org/Thing">Thing</a></dd>
+          <dt>Typically used by</dt>
+          <dd>
+<a href="#PaymentInstrument">PaymentInstrument</a>
+          </dd>
+        </dl>
+        <p>
+The example below specifies a <code>label</code> of <code>ExampleBank 
+Visa Card</code>.
+        </p>
+        <pre class="example prettyprint language-jsonld">
+{
+  '@context': 'https://w3id.org/payments/v1',
+  type: 'PaymentInstrument',
+  scheme: 'Visa',
+  label: 'ExampleBank Visa Card',
+  paymentRequestService: 'https://pay.example.com/services/cards'
+}
+        </pre>
+      </section>
+
+      <section id="paymentRequestService" about="https://w3id.org/payments#paymentRequestService"
+        typeof="rdf:Property">
+        <h3><span property="rdfs:label">paymentRequestService</span></h3>
+        <p property="rdfs:comment">
+A URL that can accept a <a href="#PaymentRequest">PaymentRequest</a> object via
+an HTTP POST request.
+        </p>
+        <dl>
+          <dt>Status</dt>
+          <dd property="vs:term_status">unstable</dd>
+          <dt>Attribute of</dt>
+          <dd><a property="rdfs:domain" href="http://schema.org/Thing">Thing</a></dd>
+          <dt>Typically used by</dt>
+          <dd>
+<a href="#PaymentInstrument">PaymentInstrument</a>
+          </dd>
+        </dl>
+        <p>
+The example below specifies a payment request service located at
+<code>https://pay.example.com/services/cards</code>.
+        </p>
+        <pre class="example prettyprint language-jsonld">
+{
+  '@context': 'https://w3id.org/payments/v1',
+  type: 'PaymentInstrument',
+  scheme: 'Visa',
+  label: 'ExampleBank Visa Card',
+  paymentRequestService: 'https://pay.example.com/services/cards'
+}
+        </pre>
+      </section>
+
+      <section id="scheme" about="https://w3id.org/payments#scheme"
+        typeof="rdf:Property">
+        <h3><span property="rdfs:label">scheme</span></h3>
+        <p property="rdfs:comment">
+A <a>payment scheme</a> is a set of rules and technical standards for the
+execution of payment transactions.
+        </p>
+        <dl>
+          <dt>Status</dt>
+          <dd property="vs:term_status">unstable</dd>
+          <dt>Attribute of</dt>
+          <dd><a property="rdfs:domain" href="http://schema.org/Thing">Thing</a></dd>
+          <dt>Typically used by</dt>
+          <dd>
+<a href="#PaymentInstrument">PaymentInstrument</a>
+          </dd>
+        </dl>
+        <p>
+The example below specifies a <a>payment instrument</a> that has a
+<a href="#Visa">Visa</a>
+<a>payment scheme</a>.
+        </p>
+        <pre class="example prettyprint language-jsonld">
+{
+  '@context': 'https://w3id.org/payments/v1',
+  type: 'PaymentInstrument',
+  scheme: 'Visa',
+  label: 'ExampleBank Visa Card',
+  paymentRequestService: 'https://pay.example.com/services/cards'
+}
+        </pre>
+      </section>
+
+    </section>
+
+  </body>
+</html>
+
